@@ -1,0 +1,56 @@
+<h4><%= @customer.last_name %><%= @customer.first_name %>さんの会員情報</h4>
+
+<table class="table table-borderless margin-left" style="width: 80%;">
+	<tr>
+	  <th style="width: 200px;">会員ID</th>
+    <td><%= @customer.id %></td>
+	</tr>
+
+	<tr>
+	  <th>氏名</th>
+	  <td><%= @customer.last_name %>　<%= @customer.first_name %></td>
+	</tr>
+
+  <tr>
+    <th>フリガナ</th>
+    <td><%= @customer.last_name_kana %>　<%= @customer.first_name_kana %></td>
+  </tr>
+
+  <tr>
+    <th>郵便番号</th>
+	  <td><%= @customer.postal_code %></td>
+	</tr>
+
+   <tr>
+    <th>住所</th>
+    <td><%= @customer.prefecture_name %><%= @customer.address_city %><%= @customer.address_street %>　<%= @customer.address_building %></td>
+  </tr>
+
+	 <tr>
+    <th>電話番号</th>
+    <td><%= @customer.telephone_number %></td>
+  </tr>
+
+  <tr>
+    <th>メールアドレス</th>
+    <td><%= @customer.email %></td>
+  </tr>
+
+  <tr>
+    <th>会員ステータス</th>
+	  <% if @customer.is_deleted == false %>
+    <td class="text-success font-weight-bold">有効</td>
+	  <% elsif @customer.is_deleted == true %>
+	  <td class="text-muted font-weight-bold">退会</td>
+	  <% end %>
+  </tr>
+</table>
+
+
+<table class="table table-borderless margin-left" style="width: 80%;">
+	<tr>
+		<th style="width: 200px;"></th>
+    <td><%= link_to "編集する", edit_admin_customer_path(@customer), class:"btn btn-success px-0 w-50"%></td>
+    <td><%= link_to "注文履歴一覧を見る", admin_orders_path, class:"btn btn-primary px-0 w-50" %></td>
+  </tr>
+</table>

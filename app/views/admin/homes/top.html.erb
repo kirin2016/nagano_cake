@@ -1,0 +1,23 @@
+  <h4>注文履歴一覧</h4>
+
+  <table class="table table-hover table-inverse margin-straight field">
+    <thead>
+      <tr>
+        <th>購入日時</th>
+        <th>購入者</th>
+        <th>注文個数</th>
+        <th>注文ステータス</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= link_to order.created_at, admin_order_path(order.id) %></td>
+          <td><%= order.customer.name %></td>
+          <td><%= order.total_amount %></td>
+          <td><%= order.status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
