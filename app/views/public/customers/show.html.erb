@@ -1,2 +1,49 @@
-<h1>Public::Customers#show</h1>
-<p>Find me in app/views/public/customers/show.html.erb</p>
+<h4>マイページ</h4>
+
+<div class="row w-auto">
+  <h3 class="col-lg-2">登録情報</h3>
+  <div class="col-lg-3"><%= link_to "編集する", edit_customer_path(current_customer.id), class:"btn btn-success px-0 w-50" %></div>
+</div>
+
+<table class="table table-bordered table-inverse margin-straight" style="width: 70%;">
+  <tr>
+	  <th  bgcolor="whitesmoke" style="width: 70px;">氏名</th>
+    <td><%= @customer.last_name %>　<%= @customer.first_name %></td>
+	</tr>
+
+	<tr>
+	  <th  bgcolor="whitesmoke" style="width: 200px;">カナ</th>
+    <td><%= @customer.last_name_kana %>　<%= @customer.first_name_kana %></td>
+	</tr>
+
+	<tr>
+	  <th  bgcolor="whitesmoke" style="width: 200px;">郵便番号</th>
+    <td><%= @customer.postal_code %></td>
+	</tr>
+
+	<tr>
+	  <th bgcolor="whitesmoke" style="width: 200px;">住所</th>
+    <td><%= @customer.prefecture_name %><%= @customer.address_city %><%= @customer.address_street %>　<%= @customer.address_building %></td>
+	</tr>
+
+	<tr>
+	  <th bgcolor="whitesmoke" style="width: 200px;">電話番号</th>
+    <td><%= @customer.telephone_number %></td>
+	</tr>
+
+	<tr>
+	  <th bgcolor="whitesmoke" style="width: 200px;">メールアドレス</th>
+    <td><%= @customer.email %></td>
+	</tr>
+</table>
+
+
+<div class="row w-auto">
+  <h3 class="col-lg-2">配送先</h3>
+  <div class="col-lg-3"><%= link_to "一覧を見る", addresses_path(current_customer.id), class:"btn btn-primary px-0 w-50" %></div>
+</div>
+
+<div class="row w-auto margin-straight">
+  <h3 class="col-lg-2">注文履歴</h3>
+  <div class="col-lg-3"><%= link_to "一覧を見る", orders_path, class:"btn btn-primary px-0 w-50" %></div>
+</div>

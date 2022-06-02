@@ -1,2 +1,56 @@
-<h1>CartItems#index</h1>
-<p>Find me in app/views/cart_items/index.html.erb</p>
+  <div class="d-flex justify-content-around">
+    <h4>ショッピングカート</h4>
+    <div style="width: 20%; margin-top: 30px;">
+      <%= link_to "カートを空にする", destroy_all_cart_items_path, method: :delete, class: "btn btn-danger px-0 w-75" %>
+    </div>
+  </div>
+
+  <table class="table table-bordered table-inverse margin-left" style="width: 80%;">
+    <thead>
+      <tr>
+        <th>商品名</th>
+        <th>単価(税込)</th>
+        <th>数量</th>
+        <th>小計</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+     <% @cart_items.each do |cart_item| %>
+        <tr>
+          <td class="image_size_minimum"  style="width: 330px;">
+            <%= attachment_image_tag cart_item.item, :image %> <%= cart_item.item.name %>
+          </td>
+          <td><%= cart_item.item.add_tax_price.to_s(:delimited, delimiter: ',') %></td>
+          <td style="width: 150px;">
+            <%= form_with model: cart_item, local: true do |f| %>
+              <%= f.select :amount, *[1..99] %>
+              <%= f.submit "変更", class:"btn btn-sm btn-success px-0 w-50 ml-3" %>
+            <% end %>
+          </td>
+          <td><%= cart_item.sum_tax_price.to_s(:delimited, delimiter: ',') %></td>
+          <% @total_amount += cart_item.sum_tax_price %>
+          <td class="center">
+            <%= link_to "削除する", cart_item_path(cart_item.id), method: :delete, class:"btn btn-sm btn-danger px-0 w-75" %>
+          </td>
+        </tr>
+     <% end %>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-around">
+    <div style="width: 38.2%;">
+      <%= link_to "買い物を続ける", items_path, class:"btn btn-primary px-0 w-50" %>
+    </div>
+    <table class="table table-bordered table-inverse" style="width: 21.8%;">
+      <tr>
+	      <th bgcolor="whitesmoke" style="width: 43%;">合計金額</th>
+        <td><%= @total_amount.to_s(:delimited, delimiter: ',') %></td>
+	    </tr>
+    </table>
+  </div>
+
+  <div class="center margin-straight">
+    <%= link_to "情報入力に進む", new_order_path, class:"btn btn-lg btn-success px-0 w-25" %>
+  </div>

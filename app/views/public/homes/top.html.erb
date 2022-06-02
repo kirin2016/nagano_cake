@@ -1,11 +1,8 @@
-<div class="margin-straight"></div>
 
-<div class="container px-5 px-sm-0">
-
-  <div class="row">
+  <div class="row margin-straight">
     <%= render 'public/items/sidebar', genres: @genres %>
-    <div class="col-lg-7 d-flex align-items-center justify-content-center">
-      <div class="border">
+    <div class="col-lg-7 d-flex align-items-center justify-content-center back-image">
+      <div class="border back-color">
         <br>
         ようこそ、ながのCAKEへ！<br>
         このサイトは、ケーキ販売のECサイトになります。<br>
@@ -16,12 +13,23 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <h3 class="col-lg-9">新着商品</h3>
+  </div>
 
   <div class="row">
     <div class="col-lg-3"></div>
-    <div class="col-lg-9">
-      <h3 class="margin-straight">新着商品</h3>
+    <% @items.each do |item| %>
+    <div class="col-lg-2 px-0 mr-3 image_size_small">
+      <%= attachment_image_tag item, :image %><br>
+      <%= item.name %><br>
+      <%= item.add_tax_price.to_s(:delimited) %>円
     </div>
+    <% end %>
   </div>
 
-</div>
+  <div class="d-flex justify-content-end">
+    <%= link_to "全ての商品を見る >", items_path %>
+  </div>
+

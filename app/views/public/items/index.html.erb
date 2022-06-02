@@ -1,2 +1,18 @@
-<h1>Public::Items#index</h1>
-<p>Find me in app/views/public/items/index.html.erb</p>
+  <div class="row margin-straight">
+    <%= render 'public/items/sidebar', genres: @genres %>
+    <div class="col-lg-9">
+      <h2>商品一覧</h2>
+      <div class="d-flex flex-wrap">
+        <% @items.each do |item| %>
+        <div class="px-0 mr-3 image_size_small">
+          <%= link_to item_path(item.id) do %>
+          <%= attachment_image_tag item, :image %><br>
+          <%= item.name %><br>
+          <%= item.add_tax_price.to_s(:delimited) %>円
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+

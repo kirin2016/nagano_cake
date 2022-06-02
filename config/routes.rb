@@ -6,8 +6,13 @@ Rails.application.routes.draw do
     get "/about" => "homes#about"
     resources :items, only: [:index, :show]
     resources :customers, only: [:show, :edit, :update]
-    get 'customers/unsubcribe'
-    resources :cart_items, only: [:index, :create, :update, :destroy]
+    get 'customers/:id/unsubscribe' => 'customers#unsubscribe', as: 'unsubscribe'
+    patch 'customers/:id/withdrawal' => 'customers#withdrawal', as: 'withdrawal'
+    resources :cart_items, only: [:index, :create, :update, :destroy] do
+      collection do
+        delete 'destroy_all'
+      end
+    end
     resources :orders, only: [:index, :show, :new, :create]
     get 'orders/thanks'
     resources :addresses, only: [:index, :edit, :create, :update, :destroy]

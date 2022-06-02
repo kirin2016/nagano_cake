@@ -39,9 +39,23 @@
   margin-left: 10%;
 }
 
+.margin-left-large {
+  margin-left: 20%;
+}
+
 .center {
   text-align: center;
   align-items: center;
+}
+
+.back-image {
+  background-image: image-url('cake.jpeg');
+  height: 420px;
+  width: 750px;
+}
+
+.back-color {
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 
@@ -50,6 +64,14 @@ h4 {
  margin-bottom: 30px;
  margin-left: 10%;
  padding: 0 20px;
+ background-color: whitesmoke;
+ display: inline-block
+}
+
+h6 {
+ margin-top: 30px;
+ margin-bottom: 30px;
+ margin-left: 12%;
  background-color: whitesmoke;
  display: inline-block
 }
@@ -83,4 +105,22 @@ thead {
     height: 300px;
     object-fit: contain;
   }
+}
+
+.image_size_small {
+  .image {
+    width: 160px;
+    height: 140px;
+    object-fit: contain;
+  }
+  width: 180px;
+}
+
+.image_size_minimum {
+  .image {
+    width: 60px;
+    height: 40px;
+    object-fit: contain;
+  }
+  width: 180px;
 }

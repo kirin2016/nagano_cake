@@ -21,3 +21,33 @@
 //= require turbolinks
 //= require jquery.jpostal
 //= require_tree .
+
+$(function() {
+  $(document).on('turbolinks:load', () => {
+    $('#customer_postal_code').jpostal({
+      postcode : [
+        '#customer_postal_code'
+      ],
+      address: {
+        "#customer_prefecture_code": "%3", // # 都道府県が入力される
+        "#customer_address_city"           : "%4", // # 市区町村と町域が入力される
+        "#customer_address_street"         : "%5%6%7" // # 大口事務所の番地と名称が入力される
+      }
+    });
+  });
+});
+
+$(function() {
+  $(document).on('turbolinks:load', () => {
+    $('#address_postal_code').jpostal({
+      postcode : [
+        '#address_postal_code'
+      ],
+      address: {
+        "#address_prefecture_code": "%3", // # 都道府県が入力される
+        "#address_address_city"           : "%4", // # 市区町村が入力される
+        "#address_address_street"         : "%5%6%7" // # 町域と大口事務所の番地と名称が入力される
+      }
+    });
+  });
+});

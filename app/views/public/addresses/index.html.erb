@@ -1,2 +1,63 @@
-<h1>Public::Addresses#index</h1>
-<p>Find me in app/views/public/addresses/index.html.erb</p>
+<script type="text/javascript" src="//jpostal-1006.appspot.com/jquery.jpostal.js"></script>
+
+<h4>配送先登録/一覧</h4>
+
+  <%= form_with model: @address, url: addresses_path, local: true do |f| %>
+    <div class="form-group row">
+      <div class="col-lg-3 d-flex align-items-center"><%= f.label :postal_code, "郵便番号(ハイフンなし)" %></div>
+      <div class="col-lg-3"><%= f.text_field :postal_code, class: "form-control" %></div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-lg-2 d-flex align-items-center">住所</div>
+      <div class="col-lg-1 d-flex align-items-center justify-content-end px-0">(都道府県)</div>
+      <div class="col-lg-3"><%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name, {}, {class: "form-control"} %></div>
+      <div class="col-lg-1 d-flex align-items-center justify-content-end px-0">(市区町村)</div>
+      <div class="col-lg-3"><%= f.text_field :address_city, class: "form-control" %></div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-1 d-flex align-items-center justify-content-end px-0">(町名番地)</div>
+      <div class="col-lg-3"><%= f.text_field :address_street, class: "form-control" %></div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-1 d-flex align-items-center justify-content-end px-0">(建物名)</div>
+      <div class="col-lg-7"><%= f.text_field :address_building, class: "form-control" %></div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-lg-3"><%= f.label :name, "宛名" %></div>
+      <div class="col-lg-3"><%= f.text_field :name, class: "form-control" %></div>
+      <div class="col-lg-2"></div>
+      <div class="col-lg-4 mt-3"><%= f.submit '新規登録', class:"btn btn-success btn-lg px-0 w-50" %></div>
+    </div>
+  <% end %>
+
+
+  <table class="table table-bordered table-inverse" style="width: 80%;">
+    <thead>
+      <tr>
+        <th>郵便番号</th>
+        <th>住所</th>
+        <th>宛名</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+     <% @addresses.each do |address| %>
+        <tr>
+          <td><%= address.postal_code %></td>
+          <td><%= address.prefecture_name %><%= address.address_city %><%= address.address_street %>　<%= address.address_building %></td>
+          <td><%= address.name %></td>
+          <td class="d-flex">
+            <%= link_to "編集する", edit_address_path(address), class:"btn btn-sm btn-success px-0 w-50 mr-2" %>
+            <%= link_to "削除する", address_path(address), method: :delete, class:"btn btn-sm btn-danger px-0 w-50" %>
+          </td>
+        </tr>
+     <% end %>
+    </tbody>
+  </table>
