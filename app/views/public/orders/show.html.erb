@@ -1,2 +1,67 @@
-<h1>Public::Orders#show</h1>
-<p>Find me in app/views/public/orders/show.html.erb</p>
+<h4>注文履歴詳細</h4>
+
+<div class="d-flex justify-content-around">
+
+  <table class="table table-bordered" style="width: 60%;">
+    <tr>
+      <th bgcolor="whitesmoke" style="width: 100px;">注文日</th>
+      <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+    </tr>
+    <tr>
+      <th bgcolor="whitesmoke">配送先</th>
+      <td>
+        〒<%= @order.postal_code_item %></br>
+        <%= @order.prefecture_code_item %><%= @order.address_city_item %><%= @order.address_street_item %>
+        　<%= @order.address_building_item %></br>
+        <%= @order.name_item %>
+      </td>
+    </tr>
+    <tr>
+      <th bgcolor="whitesmoke">支払方法</th>
+      <td><%= Order.payment_methods_i18n[Order.payment_methods.key(@order.payment)] %></td>
+    </tr>
+    <tr>
+      <th bgcolor="whitesmoke">ステータス</th>
+      <td><%= @order.order_status %></td>
+    </tr>
+  </table>
+
+
+  <table class="table table-bordered table-inverse margin-left" style="width: 20%;">
+    <tr>
+      <th bgcolor="whitesmoke" style="width: 100px;">商品合計</th>
+      <td><%= @sum_item_price_purchase %></td>
+    </tr>
+    <tr>
+      <th bgcolor="whitesmoke">配送料</th>
+      <td><%= @order.postage.to_s(:delimited, delimiter: ',') %></td>
+    </tr>
+    <tr>
+      <th bgcolor="whitesmoke">ご請求額</th>
+      <td><%= @order.total_amount.to_s(:delimited, delimiter: ',') %></td>
+    </tr>
+  </table>
+
+</div>
+
+<table class="table table-bordered table-inverse margin-left" style="width: 80%;">
+  <thead>
+    <tr>
+      <th>商品</th>
+      <th>単価(税込)</th>
+      <th>個数</th>
+      <th>小計</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @order_details.each do |order_detail| %>
+      <tr>
+        <td><%= order_detail.item.name %></td>
+        <td style="width: 150px;"><%= order_detail.price_purchase.to_s(:delimited, delimiter: ',') %></td>
+        <td><%= order_detail.amount %></td>
+        <td class="center"><%= order_detail.subtotal_tax_price_purchase %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

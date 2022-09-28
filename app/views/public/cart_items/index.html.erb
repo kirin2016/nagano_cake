@@ -17,7 +17,7 @@
     </thead>
 
     <tbody>
-     <% @cart_items.each do |cart_item| %>
+      <% @cart_items.each do |cart_item| %>
         <tr>
           <td class="image_size_minimum"  style="width: 330px;">
             <%= attachment_image_tag cart_item.item, :image %> <%= cart_item.item.name %>
@@ -29,13 +29,13 @@
               <%= f.submit "変更", class:"btn btn-sm btn-success px-0 w-50 ml-3" %>
             <% end %>
           </td>
-          <td><%= cart_item.sum_tax_price.to_s(:delimited, delimiter: ',') %></td>
-          <% @total_amount += cart_item.sum_tax_price %>
+          <td><%= cart_item.subtotal_tax_price.to_s(:delimited, delimiter: ',') %></td>
+          <% @sum_item_price += cart_item.subtotal_tax_price %>
           <td class="center">
             <%= link_to "削除する", cart_item_path(cart_item.id), method: :delete, class:"btn btn-sm btn-danger px-0 w-75" %>
           </td>
         </tr>
-     <% end %>
+      <% end %>
     </tbody>
   </table>
 
@@ -46,7 +46,7 @@
     <table class="table table-bordered table-inverse" style="width: 21.8%;">
       <tr>
 	      <th bgcolor="whitesmoke" style="width: 43%;">合計金額</th>
-        <td><%= @total_amount.to_s(:delimited, delimiter: ',') %></td>
+        <td><%= @sum_item_price.to_s(:delimited, delimiter: ',') %></td>
 	    </tr>
     </table>
   </div>

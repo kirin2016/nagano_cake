@@ -16,6 +16,10 @@ class Address < ApplicationRecord
     self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
 
+  def full_address
+    ['〒', postal_code, '　', prefecture_name, address_city, address_street, address_building, '　', name].join('')
+  end
+
 
   belongs_to :customer
 

@@ -1,0 +1,80 @@
+<h4>注文情報確認</h4>
+
+<div class="d-flex justify-content-around">
+
+  <table class="table table-bordered table-inverse" style="width: 70%;">
+    <thead>
+      <tr>
+        <th>商品名</th>
+        <th>単価(税込)</th>
+        <th>数量</th>
+        <th>小計</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @cart_items.each do |cart_item| %>
+        <tr>
+          <td class="image_size_minimum" style="width: 330px;">
+            <%= attachment_image_tag cart_item.item, :image %> <%= cart_item.item.name %>
+          </td>
+          <td><%= cart_item.item.add_tax_price.to_s(:delimited, delimiter: ',') %></td>
+          <td style="width: 150px;"><%= cart_item.amount %></td>
+          <td><%= cart_item.subtotal_tax_price.to_s(:delimited, delimiter: ',') %></td>
+          <% @sum_item_price += cart_item.subtotal_tax_price %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <table class="table table-bordered table-inverse margin-left" style="width: 20%;">
+    <tr>
+      <th bgcolor="whitesmoke" style="width: 100px;">送料</th>
+      <td><%= @order.postage.to_s(:delimited, delimiter: ',') %></td>
+    </tr>
+    <tr>
+      <th bgcolor="whitesmoke">商品合計</th>
+      <td><%= @sum_item_price.to_s(:delimited, delimiter: ',') %></td>
+    </tr>
+    <tr>
+      <% @order.total_amount = @order.postage + @sum_item_price %>
+      <th bgcolor="whitesmoke">請求金額</th>
+      <td><%= @order.total_amount.to_s(:delimited, delimiter: ',') %></td>
+    </tr>
+  </table>
+
+</div>
+
+
+<div class="row mt-4">
+  <h3>支払方法</h3>
+  <div class="margin-left">
+    <%= Order.payment_methods_i18n[Order.payment_methods.key(@order.payment)] %>
+  </div>
+</div>
+
+<div class="row margin-straight">
+  <h3>お届け先</h3>
+  <div class="margin-left">
+    〒<%= @order.postal_code_item %>
+    　<%= @order.prefecture_name_item %><%= @order.address_city_item %><%= @order.address_street_item %>
+      <%= @order.address_building_item %></br>
+      <%= @order.name_item %>
+  </div>
+</div>
+
+<%= form_with model: @order, url: orders_path, method: :post, local: true do |f| %>
+  <div class="center">
+    <%= f.hidden_field :customer_id %>
+    <%= f.hidden_field :postal_code_item %>
+    <%= f.hidden_field :prefecture_code_item %>
+    <%= f.hidden_field :address_city_item %>
+    <%= f.hidden_field :address_street_item %>
+    <%= f.hidden_field :address_building_item %>
+    <%= f.hidden_field :name_item %>
+    <%= f.hidden_field :postage %>
+    <%= f.hidden_field :payment %>
+    <%= f.hidden_field :total_amount %>
+    <%= f.submit "注文を確定する",class:"btn btn-lg btn-success" %>
+  </div>
+<% end %>

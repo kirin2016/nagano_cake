@@ -51,3 +51,18 @@ $(function() {
     });
   });
 });
+
+$(function() {
+  $(document).on('turbolinks:load', () => {
+    $('#order_postal_code_item').jpostal({
+      postcode : [
+        '#order_postal_code_item'
+      ],
+      address: {
+        "#order_prefecture_code_item": "%3", // # 都道府県が入力される
+        "#order_address_city_item"           : "%4", // # 市区町村が入力される
+        "#order_address_street_item"         : "%5%6%7" // # 町域と大口事務所の番地と名称が入力される
+      }
+    });
+  });
+});

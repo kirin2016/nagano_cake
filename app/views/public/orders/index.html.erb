@@ -1,2 +1,36 @@
-<h1>Public::Orders#index</h1>
-<p>Find me in app/views/public/orders/index.html.erb</p>
+  <h4>注文履歴一覧</h4>
+
+  <table class="table table-bordered table-inverse margin-left" style="width: 80%;">
+    <thead>
+      <tr>
+        <th>注文日</th>
+        <th>配送先</th>
+        <th>注文商品</th>
+        <th>支払金額</th>
+        <th>ステータス</th>
+        <th>注文詳細</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
+          <td>
+            〒<%= order.postal_code_item %></br>
+            <%= order.prefecture_code_item %><%= order.address_city_item %><%= order.address_street_item %>
+            　<%= order.address_building_item %></br>
+            <%= order.name_item %>
+          </td>
+          <td style="width: 150px;">
+            <% order.order_details.all.each do |order_detail| %>
+              <p><%= order_detail.item.name %></p>
+            <% end %>
+          </td>
+          <td><%= order.total_amount %></td>
+          <td class="center"><%= order.order_status %></td>
+          <td class="center"><%= link_to "表示する", order_path(order.id), class:"btn btn-primary px-0 w-50" %><%= link_to "削除する", order_path(order.id), method: :delete, class:"btn btn-sm btn-danger px-0 w-75" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

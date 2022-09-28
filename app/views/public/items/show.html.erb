@@ -12,7 +12,7 @@
       </div>
       <div class="margin-straight">
         <%= form_with model: @cart_item, local: true do |f| %>
-	    	  <%= f.hidden_field :item_id, value:@item.id %>
+	    	  <%= f.hidden_field :item_id, value: @item.id %>
 	    	  <%= f.select :amount, *[1..99], {:prompt => "個数選択"} %>
 	    	  <%= f.submit "カートに入れる", class:"btn btn-success px-0 w-50 ml-3" %>
 	      <% end %>
