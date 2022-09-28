@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         delete :destroy_all
       end
     end
-    resources :orders, only: [:index, :show, :new, :create, :destroy] do
+    resources :orders, only: [:index, :show, :new, :create] do
       collection do
         get :thanks
         post :confirm

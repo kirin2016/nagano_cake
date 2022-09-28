@@ -1,6 +1,6 @@
   <h4>注文履歴一覧</h4>
 
-  <table class="table table-bordered table-inverse margin-left" style="width: 80%;">
+  <table class="table table-bordered table-inverse">
     <thead>
       <tr>
         <th>注文日</th>
@@ -15,21 +15,21 @@
     <tbody>
       <% @orders.each do |order| %>
         <tr>
-          <td><%= order.created_at.strftime('%Y/%m/%d') %></td>
-          <td>
+          <td class="align-middle"><%= order.created_at.strftime('%Y/%m/%d') %></td>
+          <td class="align-middle">
             〒<%= order.postal_code_item %></br>
             <%= order.prefecture_code_item %><%= order.address_city_item %><%= order.address_street_item %>
             　<%= order.address_building_item %></br>
             <%= order.name_item %>
           </td>
-          <td style="width: 150px;">
+          <td class="align-middle" style="width: 210px;">
             <% order.order_details.all.each do |order_detail| %>
-              <p><%= order_detail.item.name %></p>
+              <%= order_detail.item.name %></br>
             <% end %>
           </td>
-          <td><%= order.total_amount %></td>
-          <td class="center"><%= order.order_status %></td>
-          <td class="center"><%= link_to "表示する", order_path(order.id), class:"btn btn-primary px-0 w-50" %><%= link_to "削除する", order_path(order.id), method: :delete, class:"btn btn-sm btn-danger px-0 w-75" %></td>
+          <td class="align-middle"><%= order.total_amount.to_s(:delimited, delimiter: ',') %>円</td>
+          <td class="align-middle"><%= order.order_status %></td>
+          <td class="center align-middle"><%= link_to "表示する", order_path(order.id), class:"btn btn-primary px-25" %></td>
         </tr>
       <% end %>
     </tbody>
