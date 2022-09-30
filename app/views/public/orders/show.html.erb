@@ -20,11 +20,11 @@
       </tr>
       <tr>
         <th bgcolor="whitesmoke">支払方法</th>
-        <td><%= Order.payment_methods_i18n[Order.payment_methods.key(@order.payment)] %></td>
+        <td><%= @order.payment_i18n %></td>
       </tr>
       <tr>
         <th bgcolor="whitesmoke">ステータス</th>
-        <td><%= @order.order_status %></td>
+        <td><%= @order.order_status_i18n %></td>
       </tr>
     </table>
   </div>

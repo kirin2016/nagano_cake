@@ -2,6 +2,20 @@
 ja: # 日本語の設定を行う
   enums: # enumの設定を行う
     order: # モデル名（Orderモデルに対して）
-      payment_method: # カラム名（payment_methodカラムに対して）
+      payment: # カラム名
         credit_card: 'クレジットカード'
         transfer: '銀行振込'
+
+      order_status: # カラム名
+        waiting_payment: '入金待ち'
+        payment_confirmation: '入金確認'
+        in_production: '製作中'
+        shipping_preparation: '発送準備中'
+        shipped: '発送済み'
+
+    order_detail:
+      create_status:
+        cannot_start: '着手不可'
+        waiting_production: '製作待ち'
+        in_production: '製作中'
+        complete_production: '製作完了'

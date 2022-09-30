@@ -9,5 +9,5 @@ class Admin::HomesController < ApplicationController
   def order_params
     params.require(:order).permit(:order_status)
   end
-  
+
 end

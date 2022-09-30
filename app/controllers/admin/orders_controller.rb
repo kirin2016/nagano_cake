@@ -2,12 +2,13 @@ class Admin::OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    @sum_item_price_purchase = 0
   end
 
   def update
     @order = Order.find(params[:id])
     if @order.update(order_params)
-      redirect_to admin_path, notice: "You have updated book successfully."
+      redirect_to admin_order_path(@order.id), notice: "You have updated book successfully."
     else
       render :show
     end

@@ -6,4 +6,6 @@ class OrderDetail < ApplicationRecord
     price_purchase * amount
   end
 
+  enum create_status: { cannot_start: 0, waiting_production: 1, in_production: 2, complete_production: 3 }
+
 end

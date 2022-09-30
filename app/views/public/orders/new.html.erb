@@ -4,10 +4,10 @@
 <%= form_with model: @order, url: confirm_orders_path, method: :post, local: true do |f| %>
   <h3>支払方法</h3>
   <div class="margin-left">
-    <%= f.radio_button :payment, 0 %>
-    <%= f.label :payment, Order.payment_methods_i18n[:credit_card] %></br>
-    <%= f.radio_button :payment, 1 %>
-    <%= f.label :payment, Order.payment_methods_i18n[:transfer] %>
+    <%= f.radio_button :payment, :credit_card %>
+    <%= f.label :payment, Order.payments_i18n[:credit_card] %></br>
+    <%= f.radio_button :payment, :transfer %>
+    <%= f.label :payment, Order.payments_i18n[:transfer] %>
   </div>
 
   <h3>お届け先</h3>
