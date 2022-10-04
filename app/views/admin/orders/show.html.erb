@@ -17,8 +17,9 @@
   <div class="form-group row">
     <div class="col-lg-2">配送先</div>
     <div class="col-lg-10">
-      <%= @order.postal_code_item %>　<%= @order.prefecture_code_item %><%= @order.address_city_item %>
-      <%= @order.address_street_item %>　<%= @order.address_building_item %><br>
+      〒<%= @order.postal_code_item %>
+      <%= @order.prefecture_name_item %><%= @order.address_city_item %><%= @order.address_street_item %>
+      <%= @order.address_building_item %><br>
       <%= @order.name_item %>
     </div>
   </div>
@@ -31,14 +32,17 @@
   <%= form_with model: @order, url: admin_order_path(@order.id), local: true do |f| %>
   <div class="form-group actions row">
     <div class="col-lg-2 d-flex align-items-center">注文ステータス</div>
-    <div class="col-lg-3 d-flex align-items-center"><%= f.select :order_status, Order.order_statuses.keys.map {|k|[I18n.t("enums.order.order_status.#{k}"), k]} %></div>
-    <div class="col-lg-3"><%= f.submit '更新', class:"btn btn-success px-0 w-25" %></div>
+    <div class="col-lg-2 d-flex align-items-center">
+      <%= f.select :order_status, Order.order_statuses.keys.map {|k|[I18n.t("enums.order.order_status.#{k}"), k]}, {}, {class: "form-control center"} %>
+    </div>
+    <div class="col-lg-1"><%= f.submit '更新', class:"btn btn-success px-3" %></div>
+    <div class="col-lg-7"></div>
   </div>
   <% end %>
 
   <div class="row mt-5">
 
-    <table class="table table-hover table-inverse col-lg-9">
+    <table class="table table-hover table-inverse col-lg-8">
       <thead>
         <tr>
           <th>商品名</th>
@@ -59,8 +63,10 @@
             <td class="align-middle">　<%= order_detail.amount %></td>
             <% @sum_item_price_purchase += order_detail.subtotal_tax_price_purchase %>
             <td class="align-middle"><%= order_detail.subtotal_tax_price_purchase.to_s(:delimited, delimiter: ',') %></td>
-            <td class="align-middle"><%= f.select :create_status, OrderDetail.create_statuses.keys.map {|k|[I18n.t("enums.order_detail.create_status.#{k}"), k]} %></td>
-            <td><%= f.submit '更新', class:"btn btn-success px-3 " %></td>
+            <td class="align-middle">
+              <%= f.select :create_status, OrderDetail.create_statuses.keys.map {|k|[I18n.t("enums.order_detail.create_status.#{k}"), k]}, {}, {class: "form-control center"} %>
+            </td>
+            <td class="align-middle"><%= f.submit '更新', class:"btn btn-success px-3 " %></td>
           </tr>
           <% end %>
         <% end %>
@@ -83,5 +89,7 @@
 	       <td class="font-weight-bold"><%= @order.total_amount.to_s(:delimited, delimiter: ',') %>円</td>
 	     </tr>
     </table>
+
+    <div class="col-lg-1"></div>
 
   </div>

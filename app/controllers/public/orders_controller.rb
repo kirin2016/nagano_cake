@@ -1,4 +1,6 @@
 class Public::OrdersController < ApplicationController
+  before_action :authenticate_customer!
+
   def new
     @order = Order.new
     @orders = current_customer.orders.all
@@ -16,10 +18,12 @@ class Public::OrdersController < ApplicationController
         @order_detail.price_purchase = cart_item.item.add_tax_price
         @order_detail.save
       end
+      flash[:notice] = 'ご注文が確定し、カート内が空になりました。'
       redirect_to thanks_orders_path
       cart_items.destroy_all
     else
       @order = Order.new(order_params)
+      flash.now[:danger] = 'エラーが発生し、登録できませんでした。'
       render :new
     end
   end
@@ -32,7 +36,7 @@ class Public::OrdersController < ApplicationController
     @sum_item_price = 0
 
     if order_params[:payment].nil?
-      flash[:danger] = "支払い方法を入力してください"
+      flash.now[:warning] = "支払い方法を選択してください。"
       render :new
     else
 
@@ -47,7 +51,7 @@ class Public::OrdersController < ApplicationController
 
       elsif params[:order][:selected_address] == "2"
         if params[:order][:address_id] == ""
-          flash[:danger] = "登録済み住所を選択してください"
+          flash.now[:warning] = "登録済み住所を選択してください。"
           render :new
         else
           @address = Address.find(params[:order][:address_id])
@@ -75,13 +79,13 @@ class Public::OrdersController < ApplicationController
         @address.address_building = order_params[:address_building_item]
         @address.name = order_params[:name_item]
         if @address.save
-          flash[:success] = "新しいお届け先が保存されました"
+          flash[:success] = "新しいお届け先が保存されました。"
         else
-          flash[:danger] = "新しいお届け先の情報を正しく入力してください"
+          flash.now[:warning] = "新しいお届け先の情報を正しく入力してください。"
           render :new
         end
       else
-        flash[:danger] = "必要情報を入力してください"
+        flash.now[:warning] = "必要情報を入力してください。"
         render :new
       end
     end

@@ -81,6 +81,11 @@
       </header>
 
       <main>
+        <% flash.each do |message_type, message| %>
+          <div class="center alert alert-<%= bootstrap_class_for(message_type) %>">
+            <%= message %>
+          </div>
+        <% end %>
 
         <%= yield %>
 

@@ -1,5 +1,6 @@
 class Address < ApplicationRecord
 
+  validates :name, presence: true
   validates :postal_code, presence: true
   validates :prefecture_code, presence: true
   validates :address_city, presence: true

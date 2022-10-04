@@ -1,4 +1,6 @@
 class Admin::CustomersController < ApplicationController
+  before_action :authenticate_admin!
+
   def index
     @customers = Customer.all
   end
@@ -14,8 +16,10 @@ class Admin::CustomersController < ApplicationController
   def update
     @customer = Customer.find(params[:id])
     if @customer.update(customer_params)
-      redirect_to admin_customer_path(@customer.id), notice: "You have updated book successfully."
+      flash[:success] = 'お客様情報を変更しました。'
+      redirect_to admin_customer_path(@customer.id)
     else
+      flash.now[:warning] = '必須項目に誤りがあります。必要情報を正しく入力してください。'
       render :edit
     end
   end

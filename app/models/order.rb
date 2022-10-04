@@ -1,5 +1,17 @@
 class Order < ApplicationRecord
 
+  validates :customer_id, presence: true
+  validates :postal_code_item, presence: true
+  validates :prefecture_code_item, presence: true
+  validates :address_city_item, presence: true
+  validates :address_street_item, presence: true
+  validates :address_building_item, presence: true
+  validates :name_item, presence: true
+  validates :postage, presence: true
+  validates :payment, presence: true
+  validates :total_amount, presence: true
+  validates :order_status, presence: true
+
   include JpPrefecture
   jp_prefecture :prefecture_code
 

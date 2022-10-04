@@ -4,10 +4,15 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  validates :last_name, presence: true
+  validates :first_name, presence: true
+  validates :last_name_kana, presence: true
+  validates :first_name_kana, presence: true
   validates :postal_code, presence: true
   validates :prefecture_code, presence: true
   validates :address_city, presence: true
   validates :address_street, presence: true
+  validates :telephone_number, presence: true
 
   include JpPrefecture
   jp_prefecture :prefecture_code

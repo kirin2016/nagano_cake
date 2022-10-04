@@ -1,4 +1,11 @@
 class OrderDetail < ApplicationRecord
+
+  validates :order_id, presence: true
+  validates :item_id, presence: true
+  validates :amount, presence: true
+  validates :price_purchase, presence: true
+  validates :create_status, presence: true
+
   belongs_to :item
   belongs_to :order
 

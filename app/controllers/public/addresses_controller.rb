@@ -1,4 +1,6 @@
 class Public::AddressesController < ApplicationController
+  before_action :authenticate_customer!
+
   def index
     @addresses = Address.all
     @address = Address.new
@@ -9,8 +11,10 @@ class Public::AddressesController < ApplicationController
     @address = Address.new(address_params)
     @address.customer_id = current_customer.id
     if @address.save
-      redirect_to addresses_path, notice: "You have created address successfully."
+      flash[:success] = '新規の送り先を登録しました。'
+      redirect_to addresses_path
     else
+      flash.now[:danger] = 'エラーが発生し、登録できませんでした。'
       render :index
     end
   end
@@ -22,8 +26,10 @@ class Public::AddressesController < ApplicationController
   def update
     @address = Address.find(params[:id])
     if @address.update(address_params)
-      redirect_to addresses_path, notice: "You have updated book successfully."
+      flash[:success] = '送り先の情報を変更しました。'
+      redirect_to addresses_path
     else
+      flash.now[:danger] = 'エラーが発生し、変更できませんでした。'
       render :edit
     end
   end
@@ -31,6 +37,7 @@ class Public::AddressesController < ApplicationController
   def destroy
     address = Address.find(params[:id])
     address.destroy
+    flash[:success] = '送り先を削除しました。'
     redirect_to addresses_path
   end
 

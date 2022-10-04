@@ -21,4 +21,6 @@ class ApplicationController < ActionController::Base
       :updated_at])
   end
 
+  add_flash_types :success, :info, :warning, :danger
+
 end

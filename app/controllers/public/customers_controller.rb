@@ -1,4 +1,6 @@
 class Public::CustomersController < ApplicationController
+  before_action :authenticate_customer!
+
   def show
     @customer = Customer.find(params[:id])
   end
@@ -10,8 +12,10 @@ class Public::CustomersController < ApplicationController
   def update
     @customer = Customer.find(params[:id])
     if @customer.update(customer_params)
-      redirect_to customer_path(@customer.id), notice: "You have updated book successfully."
+      flash[:success] = 'お客様情報を変更しました。'
+      redirect_to customer_path(@customer.id)
     else
+      flash.now[:danger] = 'エラーが発生し、変更できませんでした。'
       render :edit
     end
   end
@@ -24,7 +28,7 @@ class Public::CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     @customer.update(is_deleted: true)
     reset_session
-    flash[:notice] = "退会処理を実行いたしました"
+    flash[:notice] = "退会処理を実行いたしました、ご利用ありがとうございました。"
     redirect_to root_path
   end
 
