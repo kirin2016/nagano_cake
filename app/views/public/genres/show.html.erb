@@ -1,0 +1,24 @@
+  <div class="row margin-straight">
+    <%= render 'public/items/sidebar', genres: @genres %>
+    <div class="col-lg-9">
+      <div class="d-flex">
+        <h2><%= @genre.name %>一覧</h2>
+        <h5 class="d-flex align-items-end">（全<%= @item_selects.count %>件）</h5>
+      </div>
+      <div class="d-flex flex-wrap">
+        <% @items.each do |item| %>
+        <div class="px-0 mr-3 image_size_small">
+          <%= link_to item_path(item.id) do %>
+            <%= attachment_image_tag item, :image %><br>
+            <%= item.name %><br>
+            <%= item.add_tax_price.to_s(:delimited) %>円
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+      <%= paginate @items %>
+      <div class="mt-5"  style="width: 80%;">
+        <%= link_to "商品一覧に戻る", items_path, class:"btn btn-primary px-0 w-25" %>
+      </div>
+    </div>
+  </div>

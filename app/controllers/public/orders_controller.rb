@@ -3,7 +3,6 @@ class Public::OrdersController < ApplicationController
 
   def new
     @order = Order.new
-    @orders = current_customer.orders.all
   end
 
   def create
@@ -32,7 +31,7 @@ class Public::OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.customer_id = current_customer.id
     @order.postage = 800
-    @cart_items = CartItem.all
+    @cart_items = current_customer.cart_items
     @sum_item_price = 0
 
     if order_params[:payment].nil?
@@ -92,12 +91,13 @@ class Public::OrdersController < ApplicationController
   end
 
   def index
-    @orders = current_customer.orders.all
+    @orders = current_customer.orders.all.page(params[:page]).reverse_order
   end
 
   def show
     @order = Order.find(params[:id])
-    @order_details = @order.order_details.all
+    @order_details = @order.order_details.all.page(params[:page]).per(5)
+    @order_details_total = @order.order_details.all
     @sum_item_price_purchase = 0
   end
 

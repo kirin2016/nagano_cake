@@ -19,7 +19,7 @@
     <tbody>
       <% @cart_items.each do |cart_item| %>
         <tr>
-          <td class="image_size_minimum"  style="width: 330px;">
+          <td class="image_size_minimum" style="width: 330px;">
             <%= attachment_image_tag cart_item.item, :image %> <%= cart_item.item.name %>
           </td>
           <td><%= cart_item.item.add_tax_price.to_s(:delimited, delimiter: ',') %></td>
@@ -30,7 +30,6 @@
             <% end %>
           </td>
           <td><%= cart_item.subtotal_tax_price.to_s(:delimited, delimiter: ',') %></td>
-          <% @sum_item_price += cart_item.subtotal_tax_price %>
           <td class="center">
             <%= link_to "削除する", cart_item_path(cart_item.id), method: :delete, class:"btn btn-sm btn-danger px-0 w-75" %>
           </td>
@@ -38,6 +37,11 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate @cart_items %>
+
+  <% @cart_items_total.each do |cart_item| %>
+    <% @sum_item_price += cart_item.subtotal_tax_price %>
+  <% end %>
 
   <div class="d-flex justify-content-around">
     <div style="width: 38.2%;">

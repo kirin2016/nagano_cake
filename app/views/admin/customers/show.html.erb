@@ -51,6 +51,6 @@
 	<tr>
 		<th style="width: 200px;"></th>
     <td><%= link_to "編集する", edit_admin_customer_path(@customer), class:"btn btn-success px-0 w-50"%></td>
-    <td><%= link_to "注文履歴一覧を見る", admin_path, class:"btn btn-primary px-0 w-50" %></td>
+    <td><%= link_to "注文履歴一覧を見る", admin_home_path(@customer.id), class:"btn btn-primary px-0 w-50" %></td>
   </tr>
 </table>

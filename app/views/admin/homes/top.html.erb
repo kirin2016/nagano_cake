@@ -15,7 +15,7 @@
         <% @sum_amount = 0 %>
         <tr>
           <td><%= link_to order.created_at.strftime('%Y/%m/%d %H:%M:%S'), admin_order_path(order.id) %></td>
-          <td><%= order.customer.last_name %><%= order.customer.first_name %></td>
+          <td><%= link_to order.customer.last_name + order.customer.first_name, admin_home_path(order.customer_id) %></td>
           <td>
             <% order.order_details.all.each do |order_detail| %>
               <% @sum_amount += order_detail.amount %>
@@ -27,3 +27,5 @@
       <% end %>
     </tbody>
   </table>
+
+  <%= paginate @orders %>
