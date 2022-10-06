@@ -2,12 +2,12 @@ class Public::AddressesController < ApplicationController
   before_action :authenticate_customer!
 
   def index
-    @addresses = Address.all.page(params[:page]).per(5)
+    @addresses = current_customer.addresses.all.page(params[:page]).per(5)
     @address = Address.new
   end
 
   def create
-    @addresses = Address.all
+    @addresses = current_customer.addresses.all
     @address = Address.new(address_params)
     @address.customer_id = current_customer.id
     if @address.save
